@@ -10,6 +10,7 @@ import userRouter from "./routes/user.routes.js";
 import complaintRouter from "./routes/complaint.routes.js";
 import mapDataRouter from "./routes/mapData.routes.js";
 import complaintStatusRouter from "./routes/complaintStatus.routes.js";
+import adminRouter       from "./routes/admin.routes.js";
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use("/api/user",      userRouter);
 app.use("/api/complaint", complaintRouter);
 app.use("/api/map",       mapDataRouter);
 app.use("/api/status",    complaintStatusRouter);
+app.use("/api/admin",     adminRouter);
 
 // ── 404 Handler ───────────────────────────────────────────────────────────────
 app.use((req, res) => {
