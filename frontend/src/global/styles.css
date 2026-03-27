@@ -1,0 +1,841 @@
+/* App.css */
+:root {
+  --primary-green: #00f2fe;
+  --deep-blue: #4facfe;
+  --glass: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #10b981);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: white;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 50px;
+  z-index: 10;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+}
+
+.map-card {
+  width: 100%;
+  max-width: 1000px;
+  height: 450px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.upload-trigger {
+  margin-top: -30px;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  background: linear-gradient(90deg, #10b981, #3b82f6);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 20;
+}
+
+.upload-trigger:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+}
+
+/* Sparkle Effect */
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+/* Sidebar Navigation Styles */
+.sidebar-nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 80px; /* Width when collapsed */
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+  z-index: 1000;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Expand on Hover */
+.sidebar-nav:hover {
+  width: 240px;
+  background: rgba(15, 23, 42, 0.8); /* Darker on expand for readability */
+}
+
+.nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 20px 25px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  color: #10b981; /* Primary green sparkle color */
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-icon {
+  font-size: 1.5rem;
+  margin-right: 20px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.nav-text {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.sidebar-nav:hover .nav-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Logo / Icon at the top */
+.nav-logo {
+  font-size: 2rem;
+  margin-bottom: 50px;
+  filter: drop-shadow(0 0 10px #10b981);
+}
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.upload-box {
+  width: 100%;
+  height: 200px;
+  border: 2px dashed rgba(16, 185, 129, 0.4);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.upload-box:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+}
+/* src/global/styles.css */
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+}
+
+/* Custom Glass Popup */
+.leaflet-popup-content-wrapper {
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(10px);
+  color: white !important;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 12px !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(15, 23, 42, 0.9) !important;
+}
+
+/* Custom Marker Colors */
+.marker-pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+.marker-pin::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  margin: 8px 0 0 8px;
+  background: #fff;
+  position: absolute;
+  border-radius: 50%;
+}
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.stat-item {
+  padding: 30px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 10px 0 0 0;
+}
+
+.list-item {
+  grid-column: span 4;
+  padding: 30px;
+}
+
+/* Report Rows */
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Status Pills */
+.status-pill {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status-pill.pending { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+.status-pill.complete { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+.status-pill.waste { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+/* about*/
+
+/* Timeline Styling */
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 60px;
+  position: relative;
+}
+
+.timeline-step {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 30px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: default;
+}
+
+.timeline-step:hover {
+  transform: scale(1.02);
+  border-color: #10b981;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+}
+
+.step-icon {
+  font-size: 2.5rem;
+  background: rgba(16, 185, 129, 0.1);
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.step-content h3 {
+  color: #10b981;
+  margin-bottom: 10px;
+}
+
+/* Tech Stack Chips */
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.tech-stack span {
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+/* --- THE GRID FIX --- */
+.complaints-grid {
+  display: grid !important;
+  /* Forces as many columns as possible, minimum 320px each */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+  gap: 30px;
+  width: 100%;
+  margin: 30px 0;
+  padding: 0;
+}
+
+/* --- THE CARD (Admin Style) --- */
+.complaint-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 5px solid #64748b; /* Gray top border */
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  min-height: 480px;
+}
+
+/* Dynamic Top Borders based on Status */
+.complaint-card.pending { border-top-color: #ff4d4d; }
+.complaint-card.complete { border-top-color: #10b981; }
+
+.complaint-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* --- CARD COMPONENTS --- */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.status-badge.pending { background: #ff4d4d; color: white; }
+.status-badge.complete { background: #10b981; color: white; }
+.status-badge.medium { background: rgba(255,255,255,0.1); color: #ccc; margin-left: 5px; }
+
+.card-img-container {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 10px 0;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.card-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info-item {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+
+.view-details-btn {
+  margin-top: auto; /* Pushes button to bottom */
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.view-details-btn:hover {
+  background: white;
+  color: black;
+}
+/* Ensure the main container doesn't squash the grid */
+.home-container {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  display: block; /* Changed from flex to block */
+}
+
+/* THE GRID - This MUST be display: grid */
+.complaints-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+  gap: 25px !important;
+  width: 100% !important;
+  margin: 30px 0 !important;
+}
+
+/* THE CARD - Matching your screenshot colors */
+.complaint-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 5px solid #64748b; 
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.complaint-card.pending { border-top-color: #ff4d4d; }
+.complaint-card.complete { border-top-color: #10b981; }
+
+.complaint-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.status-badge.pending { background: #ff4d4d; color: white; }
+.status-badge.complete { background: #10b981; color: white; }
+
+.card-img-container {
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.card-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* --- MAP FIXES --- */
+.map-wrapper {
+  width: 90%;
+  height: 450px; /* Force a height so it doesn't disappear */
+  margin: 20px 0;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 1; /* Keep it below dropdowns but above background */
+}
+
+/* Force the actual Leaflet container to fill the wrapper */
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
+}
+
+/* --- HOME LAYOUT REPAIR --- */
+.home-container {
+  padding: 80px 5% 40px 5%;
+  display: block !important; /* Prevents flex-column from stacking everything */
+}
+
+.stat-container {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.stat-badge {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  color: white;
+}
+/* Modal Overlay - Background Dim */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal Content - LIGHT MODE */
+.modal-content.light-mode {
+  background: #ffffff;
+  color: #1a1a1a;
+  width: 95%;
+  max-width: 600px;
+  max-height: 85vh;
+  border-radius: 12px;
+  position: relative;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  padding: 24px;
+}
+
+.close-x {
+  position: absolute;
+  top: 10px; right: 15px;
+  background: none; border: none;
+  font-size: 28px; cursor: pointer;
+  color: #666;
+}
+
+.modal-title { font-size: 1.5rem; margin-bottom: 8px; font-weight: 700; }
+
+.badge-row { display: flex; gap: 8px; margin-bottom: 15px; }
+
+.priority-badge { 
+  background: #f3f4f6; 
+  color: #374151; 
+  border: 1px solid #e5e7eb;
+}
+
+.modal-image-box img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.detail-column span { display: block; font-size: 0.8rem; color: #666; margin-top: 10px; }
+.detail-column strong { font-size: 0.9rem; }
+
+/* Timeline UI (Light) */
+.timeline-flow { margin-top: 15px; border-left: 2px solid #e5e7eb; margin-left: 10px; padding-left: 20px; }
+.time-step { position: relative; margin-bottom: 20px; }
+.step-dot {
+  position: absolute;
+  left: -27px; top: 5px;
+  width: 12px; height: 12px;
+  background: #3b82f6;
+  border-radius: 50%;
+}
+.step-text p { margin: 0; font-size: 0.9rem; font-weight: 500; }
+.step-text small { color: #888; }
+.success-text { color: #10b981; }
+/* Add this at the bottom of your existing styles.css */
+
+.timeline-container-light {
+    margin-top: 20px;
+}
+
+.timeline-flow {
+    border-left: 2px solid #e5e7eb;
+    margin-left: 10px;
+    padding-left: 20px;
+}
+
+.time-step {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.step-dot {
+    position: absolute;
+    left: -27px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background: #3b82f6;
+    border-radius: 50%;
+}
+
+.step-text p { margin: 0; font-size: 0.9rem; font-weight: 500; color: #333; }
+.step-text small { color: #888; }
+.success-text { color: #10b981 !important; }
+
+/* Modal Header Fixes */
+.modal-inner { padding: 10px; }
+.badge-row { display: flex; gap: 10px; margin-top: 10px; }
+.priority-badge { background: #f3f4f6 !important; color: #4b5563 !important; border: 1px solid #ddd; }
+/* Horizontal Split Section */
+.action-section {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 40px auto;
+  align-items: stretch;
+}
+
+.guidelines-left {
+  flex: 1;
+  padding: 20px;
+  text-align: left;
+}
+
+.guidelines-left h3 {
+  font-size: 1.8rem;
+  color: #075038;
+  margin-bottom: 20px;
+}
+
+.guideline-list {
+  list-style: none;
+  padding: 0;
+}
+
+.guideline-list li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.guideline-list span {
+  background: #f9f9f9;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.upload-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.upload-container {
+  width: 100%;
+  padding: 30px;
+  text-align: center;
+}
+
+/* Fix for mobile - stack them vertically */
+@media (max-width: 768px) {
+  .action-section {
+    flex-direction: column;
+  }
+}
+/* 1. RESET ALL WRAPPERS TO BE TRANSPARENT */
+html, #root, .App {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: transparent !important; /* Forces these to stay invisible */
+}
+
+/* 2. THE ALIVE DYNAMIC BACKGROUND (The one you liked) */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #10b981) !important;
+  background-size: 400% 600% !important;
+  animation: gradientBG 15s ease infinite !important;
+  background-attachment: fixed !important; /* Keep it fixed while scrolling */
+  color: white;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 3. HOME CONTAINER FIX */
+.home-container {
+  min-height: 100vh;
+  width: 100%;
+  background: transparent !important;
+  display: block !important;
+  padding-top: 20px;
+}
+/* Ensure the APP layers don't block the body gradient */
+html, #root, .App {
+  background: transparent !important;
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #10b981) !important;
+  background-size: 400% 400% !important;
+  animation: gradientBG 15s ease infinite !important;
+  background-attachment: fixed !important;
+  color: white;
+}
+
+/* Horizontal Split Layout */
+.action-section {
+  display: flex;
+  gap: 50px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 50px auto;
+  align-items: center;
+}
+
+.guidelines-left { flex: 1.2; }
+.upload-right { flex: 1; }
+
+.guideline-list { list-style: none; padding: 0; }
+.guideline-list li {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+  font-size: 1.15rem;
+}
+
+.guideline-list span {
+  background: #000000;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content.light-mode {
+  background: white !important;
+  color: #1a1a1a !important;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  animation: modalScale 0.3s ease-out;
+}
+
+@keyframes modalScale {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.close-x {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+}
