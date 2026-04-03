@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Added for navigation
 import WasteMap from '../components/WasteMap';
 import UserHistory from '../components/UserHistory';
 import ActionSection from '../components/ActionSection';
@@ -7,7 +8,7 @@ import '../global/styles.css';
 
 const Home = () => {
   const [stats, setStats] = useState({ active: 0, cleaned: 0 });
-  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -28,57 +29,29 @@ const Home = () => {
     <div className="home-container">
       <header className="hero-section">
         <h1 className="hero-title">CleanCity Akola</h1>
-        <p style={{ opacity: 0.8 }}>Real-time waste monitoring and community action.</p>
+        <p style={{ opacity: 0.8, marginBottom: '30px' }}>Real-time waste monitoring and community action.</p>
+        
+        {/* NEW: QUICK LOGIN OPTIONS */}
+        <div className="home-auth-grid" style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '40px' }}>
+          <button className="glass-card auth-btn" onClick={() => navigate('/login')}>
+             <span style={{fontSize: '1.5rem'}}>👤</span> Citizen Login
+          </button>
+          <button className="glass-card auth-btn admin-theme" onClick={() => navigate('/login')}>
+             <span style={{fontSize: '1.5rem'}}>🏛️</span> Municipality Login
+          </button>
+        </div>
       </header>
 
-      {/* Modular Action Section */}
-      <ActionSection onReportClick={() => setShowModal(true)} />
+      {/* Stats shown early to build trust */}
+      <div className="stat-container" style={{ justifyContent: 'center', display: 'flex', gap: '20px', margin: '20px 0' }}>
+        <div className="stat-badge glass-card">🔴 Active: {stats.active}</div>
+        <div className="stat-badge glass-card">🟢 Cleaned: {stats.cleaned}</div>
+      </div>
 
-      {/* SUBMISSION POPUP MODAL */}
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="glass-card modal-content light-mode" style={{ maxWidth: '450px', padding: '30px' }}>
-            <button className="close-x" onClick={() => setShowModal(false)}>&times;</button>
-            <h2 className="modal-title">Report Details</h2>
-            <p style={{ color: '#666', fontSize: '0.9rem' }}>Provide more info to help authorities locate the waste faster.</p>
-            
-            <div style={{ marginTop: '20px' }}>
-              <label style={{ color: '#333', fontWeight: '600', display: 'block', marginBottom: '8px' }}>Waste Type</label>
-              <select style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #ddd' }}>
-                <option>Plastic / Dry Waste</option>
-                <option>Organic / Wet Waste</option>
-                <option>Construction Debris</option>
-                <option>Other</option>
-              </select>
-
-              <label style={{ color: '#333', fontWeight: '600', display: 'block', marginTop: '15px', marginBottom: '8px' }}>Additional Description</label>
-              <textarea 
-                placeholder="Ex: Near the big banyan tree..." 
-                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #ddd', height: '80px' }} 
-              />
-            </div>
-
-            <button 
-              className="upload-trigger" 
-              style={{ width: '100%', marginTop: '25px' }}
-              onClick={() => {
-                alert("Report successfully pinned to map!");
-                setShowModal(false);
-              }}
-            >
-              Confirm & Pin to Map
-            </button>
-          </div>
-        </div>
-      )}
+      <ActionSection onReportClick={() => navigate('/report')} />
 
       <div className="map-wrapper glass-card">
         <WasteMap />
-      </div>
-
-      <div className="stat-container" style={{ justifyContent: 'center', display: 'flex', gap: '20px', margin: '40px 0' }}>
-        <div className="stat-badge glass-card" style={{ padding: '15px 30px' }}>🔴 Active Issues: {stats.active}</div>
-        <div className="stat-badge glass-card" style={{ padding: '15px 30px' }}>🟢 Cleaned Areas: {stats.cleaned}</div>
       </div>
 
       <UserHistory />

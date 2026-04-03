@@ -1,35 +1,55 @@
 import React from 'react';
-import '../global/styles.css'; // Make sure the path points to your global CSS
-import Dashboard from '../pages/Dashboard';
-const Navbar = () => {
+import { Link, useLocation } from 'react-router-dom'; // Use Link for SPA feel
+import '../global/styles.css';
+
+const Navbar = ({ user, role, onLogout }) => {
+  const location = useLocation();
+
   return (
     <nav className="sidebar-nav">
       <div className="nav-logo">♻️</div>
       
-      <a href="/" className="nav-item">
+      <Link to="/" className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
         <span className="nav-icon">🏠</span>
         <span className="nav-text">Home</span>
-      </a>
+      </Link>
 
-      <a href="/about" className="nav-item">
+      <Link to="/about" className={`nav-item ${location.pathname === '/about' ? 'active' : ''}`}>
         <span className="nav-icon">🌿</span>
-        <span className="nav-text">About Project</span>
-      </a>
-      <a href="/dashboard" className="nav-item">
+        <span className="nav-text">About</span>
+      </Link>
+
+      {/* DYNAMIC DASHBOARD LINK */}
+      <Link to="/dashboard" className={`nav-item ${location.pathname === '/dashboard' ? 'active' : ''}`}>
         <span className="nav-icon">📊</span>
-        <span className="nav-text">My Dashboard</span>
-      </a>
+        <span className="nav-text">{role === 'admin' ? 'Admin Panel' : 'My Dashboard'}</span>
+      </Link>
 
-      <a href="/contact" className="nav-item">
+      <Link to="/contact" className={`nav-item ${location.pathname === '/contact' ? 'active' : ''}`}>
         <span className="nav-icon">📞</span>
-        <span className="nav-text">Contact Munsi</span>
-      </a>
+        <span className="nav-text">Contact</span>
+      </Link>
 
-      <div style={{ marginTop: 'auto', marginBottom: '30px' }} className="nav-item">
-        <span className="nav-icon">⚙️</span>
-        <span className="nav-text">Settings</span>
+      <Link to="/signup" className={`nav-item ${location.pathname === '/singup' ? 'active' : ''}`}>
+        <span className="nav-icon">✍🏻</span>
+        <span className="nav-text">Singup</span>
+      </Link>
+
+
+      {/* DYNAMIC LOGIN/LOGOUT SECTION */}
+      <div style={{ marginTop: 'auto', marginBottom: '30px' }}>
+        {user ? (
+          <div className="nav-item logout-btn" onClick={onLogout} style={{ cursor: 'pointer', color: '#ff4d4d' }}>
+            <span className="nav-icon">🚪</span>
+            <span className="nav-text">Logout</span>
+          </div>
+        ) : (
+          <Link to="/login" className="nav-item">
+            <span className="nav-icon">🔑</span>
+            <span className="nav-text">Login</span>
+          </Link>
+        )}
       </div>
-      
     </nav>
   );
 };
