@@ -108,12 +108,15 @@ export const registerAdmin = async (req, res) => {
 export const loginAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
-
+    console.log(req.body);
+   
     if (!email || !password) {
       return res.status(400).json({ success: false, message: "Email and password are required" });
     }
 
     const admin = await Admin.findOne({ email: email.toLowerCase() });
+    console.log(admin);
+    
     if (!admin) {
       return res.status(401).json({ success: false, message: "Invalid email or password" });
     }
@@ -122,8 +125,9 @@ export const loginAdmin = async (req, res) => {
       return res.status(403).json({ success: false, message: "Your account has been deactivated." });
     }
 
-    const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) {
+    // const isMatch = await bcrypt.compare(password, admin.password);
+
+    if (admin.password != password) {
       return res.status(401).json({ success: false, message: "Invalid email or password" });
     }
 
