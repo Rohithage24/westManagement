@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+.env
+
+# YOLO Training Outputs
+runs/
+*.pt
+
+# Dataset (VERY IMPORTANT)
+dataset/
+dataset_raw/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# FastAPI cache
+*.sqlite3
+
+# Misc
+*.zip
