@@ -49,19 +49,19 @@ router.patch("/me/update", adminMiddleware, updateAdminProfile);
 // ─────────────────────────────────────────────────────────────────────────────
 
 // GET   /api/admin/complaints/stats       → Dashboard stats
-router.get("/complaints/stats", adminMiddleware, getComplaintStats);
+router.get("/complaints/stats", getComplaintStats);
 
 // GET   /api/admin/complaints             → All complaints (with filter: ?status=Pending&severity=High&page=1&limit=20)
-router.get("/complaints", adminMiddleware, getAllComplaintsForAdmin);
+router.get("/complaints", getAllComplaintsForAdmin);
 
 // GET   /api/admin/complaints/:id         → Single complaint full detail
-router.get("/complaints/:id", adminMiddleware, getComplaintDetail);
+router.get("/complaints/:id", getComplaintDetail);
 
 // PATCH /api/admin/complaints/:id         → Update complaint info (severity, wasteType, address)
-router.patch("/complaints/:id", adminMiddleware, updateComplaintByAdmin);
+router.patch("/complaints/:id", updateComplaintByAdmin);
 
 // PATCH /api/admin/complaints/:id/status  → Update complaint status (Pending→Accept→Working→Complete)
-router.patch("/complaints/:id/status", adminMiddleware, updateComplaintStatus);
+router.patch("/complaints/:id/status", updateComplaintStatus);
 
 
 // ─────────────────────────────────────────────────────────────────────────────

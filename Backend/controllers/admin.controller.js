@@ -388,7 +388,7 @@ export const updateComplaintStatus = async (req, res) => {
     // ── Sync map pin state ────────────────────────────────────────────────
     const mapState =
       status === "Complete" ? "Complete" :
-      status === "Pending"  ? "Pending"  : "Waste";
+      status === "Accept"  ? "Pending"  : "Waste";
 
     await MapData.findOneAndUpdate({ complaintID: req.params.id }, { state: mapState });
 
@@ -402,12 +402,12 @@ export const updateComplaintStatus = async (req, res) => {
         complaintID:   req.params.id,
         updatedStatus: status,
         assignedTo:    statusRecord.assignedTo,
-        updatedBy: {
-          adminID:      req.admin._id,
-          name:         req.admin.name,
-          role:         req.admin.role,
-          jurisdiction: req.admin.jurisdiction,
-        },
+        // updatedBy: {
+        //   adminID:      req.admin._id,
+        //   name:         req.admin.name,
+        //   role:         req.admin.role,
+        //   jurisdiction: req.admin.jurisdiction,
+        // },
         statusHistory: statusRecord.statusHistory,
       },
     });
