@@ -12,16 +12,17 @@ const Login = ({ onAuthSuccess }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+    console.log(email,password);
     
     // Choose endpoint based on toggle
-    const endpoint = isAdmin ? '/api/admin/login' : '/api/user/login';
+    const endpoint = isAdmin ? '/api/admin/login ' : '/api/user/login';
     
     try {
       const res = await axios.post(`http://localhost:5000${endpoint}`, {
-        gmail: email,
+        email: email,
         password: password
       });
-
+      
       if (res.data.success) {
         // Update global state in App.js
         const userData = res.data.data.user || res.data.data.admin;

@@ -180,6 +180,8 @@ export const logoutAdmin = async (req, res) => {
 export const getAdminProfile = async (req, res) => {
   try {
     const admin = req.admin;
+    console.log("getmi");
+    
     return res.status(200).json({
       success: true,
       data: {
