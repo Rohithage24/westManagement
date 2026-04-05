@@ -28,10 +28,8 @@ const complaintSchema = new mongoose.Schema(
       default: "Unknown",
     },
 
-    severity: {
+    massage: {
       type: String,
-      enum: ["Low", "Medium", "High"],
-      default: "Medium",
     },
 
     mlConfidence: {
@@ -39,10 +37,6 @@ const complaintSchema = new mongoose.Schema(
       default: 0,
     },
 
-    mlRawResponse: {
-      type: mongoose.Schema.Types.Mixed, // full ML JSON saved as-is
-      default: {},
-    },
 
     // ── Location ────────────────────────────────────────────────────────────
     latitude: {

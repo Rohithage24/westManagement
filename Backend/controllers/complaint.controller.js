@@ -61,6 +61,8 @@ export const submitComplaint = async (req, res) => {
     console.log("ML URL:", ML_API_URL);
  
     const { latitude, longitude, address } = req.body;
+    console.log(req.body);
+    
     const userID = req.user._id;
  
     // ── 1. Validate inputs ────────────────────────────────────────────────────
@@ -74,7 +76,7 @@ export const submitComplaint = async (req, res) => {
     const newLon = parseFloat(longitude);
  
     // ── 2. DUPLICATE GUARD — check within 0.3 km radius ──────────────────────
-    const RADIUS_KM = 0.3;
+    const RADIUS_KM = 0.2;
     const { latMin, latMax, lonMin, lonMax } = boundingBox(newLat, newLon, RADIUS_KM);
  
     // Bounding-box DB query (fast, no index needed)
@@ -154,7 +156,7 @@ export const submitComplaint = async (req, res) => {
     const imageUrl = `/uploads/${req.file.filename}`;
  
     let wastePercentage = 0, wasteType = "Unknown",
-        severity = "Medium", mlConfidence = 0, mlRawResponse = {};
+        massage = "", mlConfidence = 0, mlRawResponse = {};
  
     try {
       const formData = new FormData();
@@ -167,22 +169,31 @@ export const submitComplaint = async (req, res) => {
  
       console.log("ML response:", mlRes.data);
  
-      mlRawResponse   = mlRes.data.mlRawResponse  ?? {};
-      wastePercentage = mlRes.data.wastePercentage ?? 0;
-      wasteType       = mlRes.data.wasteType       ?? "Unknown";
-      severity        = mlRes.data.severity        ?? "Medium";
-      mlConfidence    = mlRes.data.mlConfidence    ?? 0;
+      mlRawResponse   = mlRes.data.status  ?? {};
+      wastePercentage = mlRes.data.confidence ?? 0;
+      wasteType       = mlRes.data.status       ?? "Unknown";
+      massage        = mlRes.data.message        ?? "Medium";
+      mlConfidence    = mlRes.data.confidence    ?? 0;
     } catch (mlErr) {
       console.warn("⚠️  ML model unavailable:", mlErr.message);
     }
  
+    if(wasteType != "garbage"){
+      return res.status(201).json({
+        success:   true,
+        massage:massage,
+        massage_Backend :"You sumbit Wrong image"
+
+      })
+    }
+
     // ── 4. Save Complaint ─────────────────────────────────────────────────────
     const complaint = await Complaint.create({
       userID,
       imageUrl,
       wastePercentage,
       wasteType,
-      severity,
+      massage,
       mlConfidence,
       mlRawResponse,
       latitude:      newLat,
@@ -201,7 +212,7 @@ export const submitComplaint = async (req, res) => {
       state:         "Waste",
       wastePercentage,
       wasteType,
-      severity,
+      massage,
     });
  
     // ── 6. Save ComplaintStatus ───────────────────────────────────────────────
@@ -221,7 +232,7 @@ export const submitComplaint = async (req, res) => {
         imageUrl:        complaint.imageUrl,
         wastePercentage,
         wasteType,
-        severity,
+        massage,
         mlConfidence,
         latitude:        complaint.latitude,
         longitude:       complaint.longitude,

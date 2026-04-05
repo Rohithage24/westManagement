@@ -56,10 +56,8 @@ const mapDataSchema = new mongoose.Schema(
       default: "Unknown",
     },
 
-    severity: {
-      type: String,
-      enum: ["Low", "Medium", "High"],
-      default: "Medium",
+    massage: {
+      type: String
     },
   },
   { timestamps: true }
