@@ -2,6 +2,22 @@
 ---
 
 ## ⚙️ Setup Instructions
+⚠️ IMPORTANT: Download Trained Model
+
+The trained model is not included in this repository.
+
+👉 Download it from Google Drive:
+https://drive.google.com/drive/folders/1sOfdQzz_eyeIyIZR7F5QWpPQzogqGiYt
+
+📥 After Download
+
+Place the model in this path:
+
+1 create the "runs" folder 
+
+runs/detect/garbage_model3/weights/best.pt
+
+👉 Create folders manually if not present
 
 ### 1. Clone repository
 
