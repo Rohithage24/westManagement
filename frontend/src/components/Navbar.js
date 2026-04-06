@@ -1,10 +1,25 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Use Link for SPA feel
+import { Link, useLocation } from 'react-router-dom';
 import '../global/styles.css';
 
 const Navbar = ({ user, role, onLogout }) => {
   const location = useLocation();
+  const isAdmin = role === 'admin';
 
+  // --- ADMIN VIEW (ONLY LOGOUT IN TOP RIGHT) ---
+  if (user && isAdmin) {
+    return (
+      <div className="admin-top-nav">
+        <div className="admin-badge">Admin Mode 🛠️</div>
+        <div className="nav-item logout-btn top-right" onClick={onLogout}>
+          <span className="nav-icon">🚪Logout</span>
+          <span className="nav-text">Logout</span>
+        </div>
+      </div>
+    );
+  }
+
+  // --- REGULAR USER VIEW (FULL SIDEBAR) ---
   return (
     <nav className="sidebar-nav">
       <div className="nav-logo">♻️</div>
@@ -19,10 +34,9 @@ const Navbar = ({ user, role, onLogout }) => {
         <span className="nav-text">About</span>
       </Link>
 
-      {/* DYNAMIC DASHBOARD LINK */}
       <Link to="/dashboard" className={`nav-item ${location.pathname === '/dashboard' ? 'active' : ''}`}>
         <span className="nav-icon">📊</span>
-        <span className="nav-text">{role === 'admin' ? 'Admin Panel' : 'My Dashboard'}</span>
+        <span className="nav-text">My Dashboard</span>
       </Link>
 
       <Link to="/contact" className={`nav-item ${location.pathname === '/contact' ? 'active' : ''}`}>
@@ -30,17 +44,15 @@ const Navbar = ({ user, role, onLogout }) => {
         <span className="nav-text">Contact</span>
       </Link>
 
-      <Link to="/signup" className={`nav-item ${location.pathname === '/singup' ? 'active' : ''}`}>
+      <Link to="/signup" className={`nav-item ${location.pathname === '/signup' ? 'active' : ''}`}>
         <span className="nav-icon">✍🏻</span>
-        <span className="nav-text">Singup</span>
+        <span className="nav-text">Signup</span>
       </Link>
 
-
-      {/* DYNAMIC LOGIN/LOGOUT SECTION */}
       <div style={{ marginTop: 'auto', marginBottom: '30px' }}>
         {user ? (
           <div className="nav-item logout-btn" onClick={onLogout} style={{ cursor: 'pointer', color: '#ff4d4d' }}>
-            <span className="nav-icon">🚪</span>
+            <span className="nav-icon">🚪 </span>
             <span className="nav-text">Logout</span>
           </div>
         ) : (

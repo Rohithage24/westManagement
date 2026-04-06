@@ -59,7 +59,7 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="App" style={{ minHeight: '100vh', position: 'relative' }}>
         {/* Pass user/role to Navbar if you want to show Logout button there */}
         <Navbar user={currentUser} role={role} onLogout={handleLogout} />
 

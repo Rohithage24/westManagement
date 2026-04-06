@@ -29,7 +29,7 @@ const Home = () => {
     <div className="home-container">
       <header className="hero-section">
         <h1 className="hero-title">CleanCity Akola</h1>
-        <p style={{ opacity: 0.8, marginBottom: '30px' }}>Real-time waste monitoring and community action.</p>
+        <p style={{ opacity: 5, marginBottom: '30px', color:'ButtonShadow'}}>Real-time waste monitoring and community action.</p>
         
         {/* NEW: QUICK LOGIN OPTIONS */}
         <div className="home-auth-grid" style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '40px' }}>

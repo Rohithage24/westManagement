@@ -18,7 +18,7 @@ const Login = ({ onAuthSuccess }) => {
     
     try {
       const res = await axios.post(`http://localhost:5000${endpoint}`, {
-        gmail: email,
+        email: email,
         password: password
       });
 

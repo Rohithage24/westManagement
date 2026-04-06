@@ -30,7 +30,7 @@ const UserHistory = () => {
 
   return (
     <div style={{width: '100%', maxWidth: '1200px', marginTop: '40px'}}>
-      <h2 style={{marginBottom: '20px'}}>Community Activity</h2>
+      <h2 style={{marginBottom: '20px', marginLeft:'20px',color:'black '}}>Community Activity</h2>
       <div className="complaints-grid">
         {complaints.map((item) => (
           <ComplaintCard key={item._id} item={item} />

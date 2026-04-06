@@ -1,46 +1,58 @@
-/* App.css */
-:root {
-  --primary-green: #00f2fe;
-  --deep-blue: #4facfe;
-  --glass: rgba(255, 255, 255, 0.1);
+/* FORCE RESET - This clears any hidden white/gray backgrounds */
+/* --- START OF ALIVE BACKGROUND INJECTION --- */
+/* 1. Reset the base layers to allow the background to show through */
+html, 
+#root, 
+.App {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: transparent !important; 
 }
 
+/* 2. Apply the "Alive" moving gradient to the BODY only */
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
-  background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #10b981);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-  color: white;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    color: white;
+    /* This is the high-end moving mesh gradient */
+    background: linear-gradient(-45deg, #020617, #0f172a, #064e3b, #1e1b4b) !important;
+    background-size: 400% 400% !important;
+    animation: gradientBG 15s ease infinite !important;
+    background-attachment: fixed !important;
 }
 
 @keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-.home-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
+/* 3. Force your existing containers to be see-through so the background isn't blocked */
+.home-container, 
+.dashboard-container, 
+.admin-dashboard, 
+.report-waste-container {
+    background: transparent !important;
 }
+/* --- END OF INJECTION --- */
+
+/* --- PASTE ALL 1,200 LINES OF YOUR OLD CODE DIRECTLY BELOW THIS LINE --- */
+/* --- THE REST OF YOUR CSS STARTS HERE (DO NOT CHANGE BELOW THIS LINE) --- */
 
 .hero-section {
   text-align: center;
   margin-bottom: 50px;
   z-index: 10;
 }
+/* ... rest of your code ... */
 
 .hero-title {
   font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 10px;
-  text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+  text-shadow: 0 0 20px rgba(82, 0, 98, 0.855);
 }
 
 .map-card {
@@ -813,23 +825,70 @@ html, #root, .App {
   background: transparent !important; /* Forces these to stay invisible */
 }
 
+
+/*this is the real background jaha pe gand lagi thi */
 /* 2. THE ALIVE DYNAMIC BACKGROUND (The one you liked) */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
+  color: #1e293b;
+  min-height: 100vh;
+  width: 100%;
+  background: #f8fafc; /* Your light base */
   overflow-x: hidden;
-  background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #10b981) !important;
-  background-size: 400% 600% !important;
-  animation: gradientBG 15s ease infinite !important;
-  background-attachment: fixed !important; /* Keep it fixed while scrolling */
-  color: white;
+  position: relative;
+  z-index: 1;
 }
 
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* THE BREATHING GLOWS (Inspired by your screenshot) */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(100px); /* This creates that soft "mist" look */
+  z-index: -1; /* Stays behind your 1,200 lines of code */
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Blob 1: Top Right Glow */
+body::before {
+  top: -100px;
+  right: -100px;
+  background: radial-gradient(circle, #9c41f8, transparent 100%);
+  animation: glowBreath 5s ease-in-out infinite alternate;
+}
+
+/* Blob 2: Bottom Left Glow */
+body::after {
+  bottom: -100px;
+  left: -100px;
+  background: radial-gradient(circle, #21fd8b, transparent 100%);
+  animation: glowBreath 5s ease-in-out infinite alternate-reverse;
+}
+
+/* THE BREATHING ANIMATION */
+@keyframes glowBreath {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6; /* Inhale: Glow gets brighter and larger */
+    transform: scale(1) translate(-5%, 5%);
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.3; /* Exhale: Glow fades out */
+  }
+}
+
+/* Force your existing containers to be transparent so the breath shows */
+#root, .App, .home-container, .dashboard-container {
+  background: transparent !important;
 }
 
 /* 3. HOME CONTAINER FIX */
@@ -849,11 +908,28 @@ html, #root, .App {
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #10b981) !important;
+  font-family: 'Inter', sans-serif;
+  color: #1e293b; /* Strong slate for contrast */
+  min-height: 100vh;
+  width: 100%;
+
+  /* 1. THE COLORS: Cyan, Soft Lavender, and Pale Emerald */
+  background: linear-gradient(
+    -45deg, 
+    #e0f2fe, /* Light Sky Blue */
+    #6bfd97, /* Soft Mint */
+    #b26bf8, /* Pale Lavender */
+    #30edf7  /* Light Cyan */
+  ) !important;
+  
   background-size: 400% 400% !important;
-  animation: gradientBG 15s ease infinite !important;
   background-attachment: fixed !important;
-  color: white;
+  
+  /* 2. THE MOVEMENT: 15s keeps it "Alive" without being dizzy */
+  animation: auroraLight 15s ease infinite !important;
+  
+  background-repeat: no-repeat;
+  overflow-x: hidden;
 }
 
 /* Horizontal Split Layout */
@@ -1120,7 +1196,7 @@ body {
 }
 
 .action-btn-sm.accept { background: #3b82f6; color: white; }
-.action-btn-sm.work { background: #f59e0b; color: white; }
+.action-btn-sm.work { background: #f59e0b; color: rgb(0, 0, 0); }
 .action-btn-sm.done { background: #10b981; color: white; }
 
 .action-btn-sm:hover {
@@ -1162,4 +1238,49 @@ body {
 
 .logout-btn:hover {
   background: rgba(255, 77, 77, 0.1) !important;
+}
+/* ADMIN LOGOUT POSITIONING */
+.admin-top-nav {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999; /* Ensure it's above everything */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.admin-badge {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.logout-btn.top-right {
+  background: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 135, 135, 0.05);
+}
+
+.logout-btn.top-right:hover {
+  background: rgba(255, 77, 77, 0.1) !important; /* Slight red tint on hover */
+  transform: translateY(-2px);
+  border-color: rgba(255, 77, 77, 0.3);
+}
+
+.logout-btn.top-right .nav-text {
+  color: #ff4d4d; /* Keep logout text red for clarity */
+  font-weight: 600;
 }
