@@ -3,6 +3,8 @@ import ComplaintDetails from './ComplaintDetails';
 
 const ComplaintCard = ({ item }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // console.log(item);
+  
 
   if (!item) return null;
   const statusClass = item.currentStatus?.toLowerCase() || 'pending';
@@ -18,7 +20,8 @@ const ComplaintCard = ({ item }) => {
         <p style={{fontSize: '0.8rem', opacity: 0.6, margin: '5px 0'}}>👤 Demo User</p>
 
         <div className="card-img-container">
-          <img src={item.imageUrl} alt="report" />
+          {/* <img src={item.imageUrl} alt="report" /> */}
+          <img src={`http://localhost:5000${item.imageUrl}`} alt="report" />
         </div>
 
         <div className="card-info" style={{marginTop: '10px'}}>

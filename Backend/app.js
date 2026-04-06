@@ -5,12 +5,18 @@ import cors from "cors";
 import http from "http";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import path from 'path';
+
 
 import userRouter from "./routes/user.routes.js";
 import complaintRouter from "./routes/complaint.routes.js";
 import mapDataRouter from "./routes/mapData.routes.js";
 import complaintStatusRouter from "./routes/complaintStatus.routes.js";
 import adminRouter       from "./routes/admin.routes.js";
+
+
+
+
 
 dotenv.config();
 
@@ -27,6 +33,9 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
 
 // ── Core Middleware ───────────────────────────────────────────────────────────
 app.use(express.json({ limit: "10kb" }));
