@@ -108,12 +108,15 @@ export const registerAdmin = async (req, res) => {
 export const loginAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
-
+    console.log(req.body);
+   
     if (!email || !password) {
       return res.status(400).json({ success: false, message: "Email and password are required" });
     }
 
     const admin = await Admin.findOne({ email: email.toLowerCase() });
+    console.log(admin);
+    
     if (!admin) {
       return res.status(401).json({ success: false, message: "Invalid email or password" });
     }
@@ -122,8 +125,9 @@ export const loginAdmin = async (req, res) => {
       return res.status(403).json({ success: false, message: "Your account has been deactivated." });
     }
 
-    const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) {
+    // const isMatch = await bcrypt.compare(password, admin.password);
+
+    if (admin.password != password) {
       return res.status(401).json({ success: false, message: "Invalid email or password" });
     }
 
@@ -176,6 +180,8 @@ export const logoutAdmin = async (req, res) => {
 export const getAdminProfile = async (req, res) => {
   try {
     const admin = req.admin;
+    console.log("getmi");
+    
     return res.status(200).json({
       success: true,
       data: {
@@ -388,7 +394,7 @@ export const updateComplaintStatus = async (req, res) => {
     // ── Sync map pin state ────────────────────────────────────────────────
     const mapState =
       status === "Complete" ? "Complete" :
-      status === "Pending"  ? "Pending"  : "Waste";
+      status === "Accept"  ? "Pending"  : "Waste";
 
     await MapData.findOneAndUpdate({ complaintID: req.params.id }, { state: mapState });
 
@@ -402,12 +408,12 @@ export const updateComplaintStatus = async (req, res) => {
         complaintID:   req.params.id,
         updatedStatus: status,
         assignedTo:    statusRecord.assignedTo,
-        updatedBy: {
-          adminID:      req.admin._id,
-          name:         req.admin.name,
-          role:         req.admin.role,
-          jurisdiction: req.admin.jurisdiction,
-        },
+        // updatedBy: {
+        //   adminID:      req.admin._id,
+        //   name:         req.admin.name,
+        //   role:         req.admin.role,
+        //   jurisdiction: req.admin.jurisdiction,
+        // },
         statusHistory: statusRecord.statusHistory,
       },
     });

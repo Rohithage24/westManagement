@@ -9,7 +9,10 @@ const UserHistory = () => {
     const fetchHistory = async () => {
       try {
         const res = await axios.get('http://localhost:5000/api/complaint/my');
+          // console.log(res.data);
+
         if (res.data.success && res.data.data.length > 0) {
+          
           setComplaints(res.data.data);
         } else {
           throw new Error("No data");

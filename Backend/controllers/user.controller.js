@@ -104,7 +104,9 @@ export const registerUser = async (req, res) => {
 // =============================================================================
 export const loginUser = async (req, res) => {
   try {
-    const { gmail, password } = req.body;
+    const { email, password } = req.body;
+    // console.log(req.body);
+    const gmail = email;
 
     // 1. Validate fields
     if (!gmail || !password) {
@@ -116,6 +118,8 @@ export const loginUser = async (req, res) => {
 
     // 2. Find user by gmail
     const user = await User.findOne({ gmail: gmail.toLowerCase() });
+    console.log(user);
+    
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -141,9 +145,9 @@ export const loginUser = async (req, res) => {
       message: "Login successful",
       data: {
         user: {
-          id: user._id,
+          // id: user._id,
           name: user.name,
-          gmail: user.gmail,
+          email: user.gmail,
           address: user.address,
         },
       },
@@ -200,9 +204,9 @@ export const getMyProfile = async (req, res) => {
       message: "Profile fetched successfully",
       data: {
         user: {
-          id: user._id,
+          // id: user._id,
           name: user.name,
-          gmail: user.gmail,
+          email: user.gmail,
           address: user.address,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
