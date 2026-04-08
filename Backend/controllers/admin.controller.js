@@ -393,8 +393,9 @@ export const updateComplaintStatus = async (req, res) => {
 
     // ── Sync map pin state ────────────────────────────────────────────────
     const mapState =
-      status === "Complete" ? "Complete" :
-      status === "Accept"  ? "Pending"  : "Waste";
+      status === "Accept" ? "Accept" :
+      status === "Working"  ? "Working"  : "Complete";
+      
 
     await MapData.findOneAndUpdate({ complaintID: req.params.id }, { state: mapState });
 

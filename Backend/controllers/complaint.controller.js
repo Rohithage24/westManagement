@@ -250,7 +250,6 @@ export const submitComplaint = async (req, res) => {
       latitude: newLat,
       longitude: newLon,
       address: address || '',
-      currentStatus: 'Waste'
     })
 
     // ── 5. Save MapData ───────────────────────────────────────────────────────
@@ -260,7 +259,6 @@ export const submitComplaint = async (req, res) => {
       latitude: newLat,
       longitude: newLon,
       address: address || '',
-      state: 'Waste',
       wastePercentage,
       wasteType,
       massage

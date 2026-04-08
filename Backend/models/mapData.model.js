@@ -41,8 +41,8 @@ const mapDataSchema = new mongoose.Schema(
     //   Green  → Complete
     state: {
       type: String,
-      enum: ["Waste", "Pending", "Complete"],
-      default: "Waste",
+      enum: ["Pending", "Accept", "Working", "Complete"],
+      default: "Pending",
     },
 
     // ── Extra display info ───────────────────────────────────────────────────

@@ -117,8 +117,8 @@ export const updateStatus = async (req, res) => {
     // ── Sync MapData state ────────────────────────────────────────────────
     // Map state: Pending → "Pending" | Complete → "Complete" | else → "Waste"
     const mapState =
-      status === "Complete" ? "Complete" :
-      status === "Pending"  ? "Pending"  : "Waste";
+       status === "Accept" ? "Accept" :
+      status === "Working"  ? "Working"  : "Complete";
 
     await MapData.findOneAndUpdate(
       { complaintID: req.params.complaintID },
@@ -127,8 +127,8 @@ export const updateStatus = async (req, res) => {
 
     // ── Sync Complaint.currentStatus ──────────────────────────────────────
     const complaintState =
-      status === "Complete" ? "Complete" :
-      status === "Pending"  ? "Pending"  : "Waste";
+       status === "Accept" ? "Accept" :
+      status === "Working"  ? "Working"  : "Complete";
 
     await Complaint.findByIdAndUpdate(req.params.complaintID, {
       currentStatus: complaintState,

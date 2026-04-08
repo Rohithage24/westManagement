@@ -57,8 +57,8 @@ const complaintSchema = new mongoose.Schema(
     // ── Status (reference to ComplaintStatus model) ──────────────────────
     currentStatus: {
       type: String,
-      enum: ["Waste", "Pending", "Complete"],
-      default: "Waste",
+      enum: ["Pending", "Accept", "Working", "Complete"],
+      default: "Pending",
     },
   },
   { timestamps: true }
