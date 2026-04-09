@@ -1,43 +1,92 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-// Set global axios defaults for cookies
+// Send cookies with every request
 axios.defaults.withCredentials = true;
+
+const BASE = 'http://localhost:5000';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser]       = useState(null); // regular user
+  const [admin, setAdmin]     = useState(null); // admin user
   const [loading, setLoading] = useState(true);
 
-  // Check if user is logged in on mount
+  // ── On mount: check both cookies in parallel ────────────────────────────
   useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const res = await axios.get('http://localhost:5000/api/user/me');
-        if (res.data.success) setUser(res.data.data.user);
-      } catch (err) {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
+    const checkAuth = async () => {
+      await Promise.all([checkAdmin(), checkUser()]);
+      setLoading(false);
     };
-    checkUser();
+    checkAuth();
   }, []);
 
+  // Check admin_token cookie → GET /api/admin/me
+  const checkAdmin = async () => {
+    try {
+      const res = await axios.get(`${BASE}/api/admin/me`);
+      if (res.data.success) setAdmin(res.data.data.admin ?? res.data.data.user);
+    } catch {
+      setAdmin(null);
+    }
+  };
+
+  // Check token cookie → GET /api/user/me
+  const checkUser = async () => {
+    try {
+      const res = await axios.get(`${BASE}/api/user/me`);
+      if (res.data.success) setUser(res.data.data.user);
+    } catch {
+      setUser(null);
+    }
+  };
+
+  // ── Admin login → POST /api/admin/login ─────────────────────────────────
+  const adminLogin = async (email, password) => {
+    const res = await axios.post(`${BASE}/api/admin/login`, { email, password });
+    if (res.data.success) setAdmin(res.data.data.admin ?? res.data.data.user);
+    return res.data;
+  };
+
+  // ── Admin logout → POST /api/admin/logout ───────────────────────────────
+  const adminLogout = async () => {
+    try { await axios.post(`${BASE}/api/admin/logout`); } catch { /* ignore */ }
+    setAdmin(null);
+  };
+
+  // ── User login (email + password) → POST /api/user/login ────────────────
   const login = async (gmail, password) => {
-    const res = await axios.post('http://localhost:5000/api/user/login', { gmail, password });
+    const res = await axios.post(`${BASE}/api/user/login`, { gmail, password });
     if (res.data.success) setUser(res.data.data.user);
     return res.data;
   };
 
+  // ── User logout → POST /api/user/logout ─────────────────────────────────
   const logout = async () => {
-    await axios.post('http://localhost:5000/api/user/logout');
+    try { await axios.post(`${BASE}/api/user/logout`); } catch { /* ignore */ }
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider
+      value={{
+        // State
+        user,
+        admin,
+        loading,
+
+        // Booleans
+        isUser:  !!user,
+        isAdmin: !!admin,
+
+        // Actions
+        login,
+        logout,
+        adminLogin,
+        adminLogout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

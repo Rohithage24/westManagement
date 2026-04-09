@@ -44,10 +44,10 @@ const Navbar = ({ user, role, onLogout }) => {
         <span className="nav-text">Contact</span>
       </Link>
 
-      <Link to="/signup" className={`nav-item ${location.pathname === '/signup' ? 'active' : ''}`}>
+      {user ?"":(<Link to="/signup" className={`nav-item ${location.pathname === '/signup' ? 'active' : ''}`}>
         <span className="nav-icon"></span>
         <span className="nav-text">Signup</span>
-      </Link>
+      </Link>)}
 
       <div style={{ marginTop: 'auto', marginBottom: '30px' }}>
         {user ? (

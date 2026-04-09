@@ -6,6 +6,8 @@ import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from "react-le
 import L from "leaflet";
 import axios from "axios";
 import "leaflet/dist/leaflet.css";
+import '../global/complentDetial.css';
+
 
 // ─── Fix broken default Leaflet icons in webpack/vite ────────────────────────
 delete L.Icon.Default.prototype._getIconUrl;

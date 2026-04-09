@@ -2,6 +2,23 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import '../global/styles.css'
 
+
+const getAddressFromCoords = async (lat, lng) => {
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+      { headers: { 'Accept-Language': 'en' } }
+    );
+    const data = await res.json();
+    // Build a short readable address from the response
+    const { road, suburb, city, town, village, state, country } = data.address || {};
+    const parts = [road, suburb, city || town || village, state, country].filter(Boolean);
+    return parts.slice(0, 3).join(', ') || data.display_name || `${lat}, ${lng}`;
+  } catch {
+    return `${lat}, ${lng}`;  // fallback to coords if request fails
+  }
+};
+
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
     total: 0,
@@ -11,6 +28,7 @@ const AdminDashboard = () => {
   })
   const [complaints, setComplaints] = useState([])
   const [filter, setFilter] = useState('All')   // ✅ FIX 1: keep 'All' as default
+  const [addresses, setAddresses] = useState({});
 
   useEffect(() => {
     fetchAdminData()
@@ -67,6 +85,27 @@ const AdminDashboard = () => {
       alert('Status update failed')
     }
   }
+
+  console.log(complaints);
+  
+  useEffect(() => {
+  const fetchAddresses = async () => {
+    const newAddresses = {};
+
+    for (const c of complaints) {
+      if (c.latitude && c.longitude) {
+        const addr = await getAddressFromCoords(c.latitude, c.longitude);
+        newAddresses[c._id] = addr;
+      }
+    }
+
+    setAddresses(newAddresses);
+  };
+
+  if (complaints.length > 0) {
+    fetchAddresses();
+  }
+}, [complaints]);
 
   return (
     <div className='dashboard-container' style={{ paddingTop: '100px' }}>
@@ -162,7 +201,7 @@ const AdminDashboard = () => {
                 style={{ gridTemplateColumns: '1fr 1.2fr 1fr 1fr 1.5fr' }}
               >
                 <strong>{report.userID?.name || 'Anonymous'}</strong>
-                <span style={{ fontSize: '0.85rem' }}>{report.address}</span>
+                <span style={{ fontSize: '0.85rem' }}>{addresses[report._id] || report.address}</span>
                 <span className={`severity-tag ${report.severity?.toLowerCase()}`}>
                   {report.wasteType}
                 </span>

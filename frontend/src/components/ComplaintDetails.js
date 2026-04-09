@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import '../global/complentDetial.css';
+import { useAuth } from '../context/AuthContext';
 
 const STATUS_COLOR = {
   Pending:  '#f59e0b',
@@ -9,9 +11,12 @@ const STATUS_COLOR = {
 };
 
 const ComplaintDetails = ({ item, onClose }) => {
-  console.log(item);
+  // console.log(item);
 
   const [statusData, setStatusData] = useState(null);
+  const user = useAuth()
+  console.log(user);
+  
 
   // ── Fetch status history for this complaint ──────────────────────────────
   useEffect(() => {
@@ -26,16 +31,30 @@ const ComplaintDetails = ({ item, onClose }) => {
       .catch((err) => console.warn('Status fetch error:', err));
   }, [item._id]);
 
+  // ✅ FIX 1: item has no 'title' field — build one from wasteType + address
+  const title = item.title
+    || `${item.wasteType || 'Waste'} — ${item.address || 'Unknown Location'}`;
+
+  // ✅ FIX 2: safe toLowerCase — won't crash if currentStatus is undefined
+  const statusClass = item.currentStatus?.toLowerCase() || 'pending';
+
+  // ✅ FIX 3: use real updatedAt for resolved date, not a hardcoded string
+  const resolvedDate = item.currentStatus === 'Complete'
+    ? new Date(item.updatedAt).toLocaleString()
+    : 'TBD';
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content light-mode" onClick={(e) => e.stopPropagation()}>
         <button className="close-x" onClick={onClose}>&times;</button>
 
         <div className="modal-inner">
-          <h2 className="modal-title">{item.title}</h2>
+          {/* ✅ FIX 1: computed title */}
+          <h2 className="modal-title">{title}</h2>
 
           <div className="badge-row">
-            <span className={`status-badge ${item.currentStatus.toLowerCase()}`}>
+            {/* ✅ FIX 2: safe statusClass */}
+            <span className={`status-badge ${statusClass}`}>
               {item.currentStatus}
             </span>
             <span className="status-badge priority-badge">Medium Priority</span>
@@ -54,14 +73,15 @@ const ComplaintDetails = ({ item, onClose }) => {
             <div className="details-grid">
               <div className="detail-column">
                 <span>👤 Reported by</span>
-                <strong>Demo User</strong>
+                <strong>{user.user.name}</strong>
                 <span>📍 Location</span>
                 <strong>{item.address}</strong>
               </div>
               <div className="detail-column">
                 <span>🟢 Resolved on</span>
+                {/* ✅ FIX 3: real date from updatedAt */}
                 <strong className={item.currentStatus === 'Complete' ? 'success-text' : ''}>
-                  {item.currentStatus === 'Complete' ? '3/23/2026, 6:25:25 PM' : 'TBD'}
+                  {resolvedDate}
                 </strong>
                 <span>📅 Submitted on</span>
                 <strong>{new Date(item.createdAt).toLocaleString()}</strong>
@@ -74,7 +94,7 @@ const ComplaintDetails = ({ item, onClose }) => {
             <h4 style={{ marginTop: '20px', marginBottom: '10px' }}>📈 Activity Timeline</h4>
             <div className="timeline-flow">
 
-              {/* ── Static first step: complaint submitted ── */}
+              {/* Static first step */}
               <div className="time-step">
                 <div className="step-dot" style={{ background: '#ef4444' }}></div>
                 <div className="step-text">
@@ -83,7 +103,7 @@ const ComplaintDetails = ({ item, onClose }) => {
                 </div>
               </div>
 
-              {/* ── Dynamic status history from API ── */}
+              {/* Dynamic status history from API */}
               {statusData?.statusHistory?.length > 0
                 ? statusData.statusHistory.map((h, i) => (
                     <div className="time-step" key={i}>
@@ -107,8 +127,7 @@ const ComplaintDetails = ({ item, onClose }) => {
                       </div>
                     </div>
                   ))
-                : /* fallback if API not loaded yet */
-                  !statusData && (
+                : !statusData && (
                     <div className="time-step">
                       <div className="step-dot"></div>
                       <div className="step-text">
@@ -118,7 +137,7 @@ const ComplaintDetails = ({ item, onClose }) => {
                     </div>
                   )}
 
-              {/* ── Current status badge at end of chain ── */}
+              {/* Current status at end of chain */}
               {statusData && (
                 <div className="time-step">
                   <div
@@ -149,7 +168,6 @@ const ComplaintDetails = ({ item, onClose }) => {
 };
 
 export default ComplaintDetails;
-
 
 // import React from 'react';
 

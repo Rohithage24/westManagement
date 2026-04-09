@@ -5,10 +5,12 @@ import WasteMap from '../components/WasteMap';
 import UserHistory from '../components/UserHistory';
 import ActionSection from '../components/ActionSection';
 import '../global/styles.css';
+import { useAuth } from '../context/AuthContext';
 
 const Home = () => {
   const [stats, setStats] = useState({ active: 0, cleaned: 0 });
   const navigate = useNavigate();
+  const user = useAuth();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -32,14 +34,14 @@ const Home = () => {
         <p style={{ opacity: 5, marginBottom: '30px', color:'ButtonShadow'}}>Real-time waste monitoring and community action.</p>
         
         {/* NEW: QUICK LOGIN OPTIONS */}
-        <div className="home-auth-grid" style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '40px' }}>
+        {user ? "":(<div className="home-auth-grid" style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '40px' }}>
           <button className="glass-card auth-btn" onClick={() => navigate('/login')}>
              <span style={{fontSize: '1.5rem'}}>👤</span> Citizen Login
           </button>
           <button className="glass-card auth-btn admin-theme" onClick={() => navigate('/login')}>
              <span style={{fontSize: '1.5rem'}}>🏛️</span> Municipality Login
           </button>
-        </div>
+        </div>)}
       </header>
 
       {/* Stats shown early to build trust */}
