@@ -211,7 +211,8 @@ const ReportWaste = () => {
           headers: { 'Content-Type': 'multipart/form-data' }
         }
       );
-
+      console.log(res.data,res.status);
+      
       if (res.data.success) {
         setUploadStatus('analyzing');
 
@@ -222,13 +223,19 @@ const ReportWaste = () => {
       }
 
     } catch (err) {
-      console.error(err);
+      // console.error(err);
 
       // ✅ FIX 2: handle 409 duplicate complaint response
       if (err.response?.status === 409 && err.response?.data?.duplicate) {
         setUploadStatus('');
+        console.log(err.response.data);
+        
         setDuplicate(err.response.data);   // contains message + data.userMessage[]
-      } else {
+      } else if(err.response?.status === 400 && !err.response?.data?.image) {
+        console.log(err.response.data.massage_Backend);
+        
+        setUploadStatus('image');
+      }else{
         setUploadStatus('error');
       }
     }
@@ -307,6 +314,11 @@ const ReportWaste = () => {
         {uploadStatus === 'error' && (
           <div className="status-toast error" style={{ marginTop: '20px', color: '#ff4d4d', textAlign: 'center' }}>
             ❌ Failed to upload. Please try again.
+          </div>
+        )}
+         {uploadStatus === 'image' && (
+          <div className="status-toast error" style={{ marginTop: '20px', color: '#ff4d4d', textAlign: 'center' }}>
+            ❌ You sumbit Wrong image.
           </div>
         )}
 

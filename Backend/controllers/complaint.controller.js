@@ -222,8 +222,9 @@ export const submitComplaint = async (req, res) => {
     }
 
     if (wasteType != 'garbage') {
-      return res.status(201).json({
-        success: true,
+      return res.status(400).json({
+        success: false,
+        image : false,
         massage: massage,
         massage_Backend: 'You sumbit Wrong image'
       })
