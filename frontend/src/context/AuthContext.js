@@ -56,8 +56,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   // ── User login (email + password) → POST /api/user/login ────────────────
-  const login = async (gmail, password) => {
-    const res = await axios.post(`${BASE}/api/user/login`, { gmail, password });
+  const login = async (email, password) => {
+    const res = await axios.post(`${BASE}/api/user/login`, {email , password });
     if (res.data.success) setUser(res.data.data.user);
     return res.data;
   };

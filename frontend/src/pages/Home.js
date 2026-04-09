@@ -34,7 +34,7 @@ const Home = () => {
         <p style={{ opacity: 5, marginBottom: '30px', color:'ButtonShadow'}}>Real-time waste monitoring and community action.</p>
         
         {/* NEW: QUICK LOGIN OPTIONS */}
-        {user ? "":(<div className="home-auth-grid" style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '40px' }}>
+        {user.user ? "":(<div className="home-auth-grid" style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '40px' }}>
           <button className="glass-card auth-btn" onClick={() => navigate('/login')}>
              <span style={{fontSize: '1.5rem'}}>👤</span> Citizen Login
           </button>

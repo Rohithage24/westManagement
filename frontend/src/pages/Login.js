@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Login = ({ onAuthSuccess }) => {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [ isAdmin,setIsAdmin] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { adminLogin,login} = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,6 +29,15 @@ const Login = ({ onAuthSuccess }) => {
         // Update global state in App.js
         const userData = res.data.data.user || res.data.data.admin;
         onAuthSuccess(userData, isAdmin ? 'admin' : 'user');
+        if (isAdmin) {
+          adminLogin(email,password)
+          console.log("admin");
+          
+        }else{
+          login(email,password)
+          console.log("user");
+          
+        }
         navigate('/dashboard');
       }
     } catch (err) {
