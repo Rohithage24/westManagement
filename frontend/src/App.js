@@ -12,6 +12,7 @@ import ReportWaste from './pages/ReportWaste';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+
 import './global/styles.css';
 
 // Important: Global Axios setting for Cookies

@@ -733,7 +733,7 @@
 
 .guidelines-left h3 {
   font-size: 1.8rem;
-  color: #075038;
+  color: #26f66b;
   margin-bottom: 20px;
 }
 
@@ -1155,7 +1155,7 @@ body::after {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 12px 15px;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   font-family: inherit;
   transition: all 0.3s ease;
 }
@@ -1358,31 +1358,31 @@ body::after {
   z-index: 9999; /* Ensure it's above everything */
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 .admin-badge {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(2, 97, 149, 0.964);
   backdrop-filter: blur(10px);
   padding: 5px 12px;
   border-radius: 20px;
-  font-size: 0.8rem;
-  color: #1e293b;
+  font-size: 0.99rem;
+  color: #1e3b29;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .logout-btn.top-right {
-  background: rgba(255, 255, 255, 0.3) !important;
+  background: rgba(255, 0, 0, 0.3) !important;
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  padding: 10px 20px;
+  padding: 10px 20px 10px 20px;
   border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 10px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 135, 135, 0.05);
+  box-shadow: 0 4px 15px rgba(255, 249, 249, 0);
 }
 
 .logout-btn.top-right:hover {
@@ -1394,4 +1394,30 @@ body::after {
 .logout-btn.top-right .nav-text {
   color: #ff4d4d; /* Keep logout text red for clarity */
   font-weight: 600;
+}
+
+
+/*-------------------footer-------------------*/
+.main-footer {
+    background: rgba(5, 8, 15, 0.9) !important;
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--brd);
+    padding: 40px 20px;
+    color: var(--txt);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* If the Sidebar is active, push the footer to the right */
+@media (min-width: 641px) {
+    .main-footer, main {
+        margin-left: 330px; 
+    }
 }

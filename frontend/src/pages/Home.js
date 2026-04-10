@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'; // Added for navigation
 import WasteMap from '../components/WasteMap';
 import UserHistory from '../components/UserHistory';
 import ActionSection from '../components/ActionSection';
+import Footer from '../components/Footer';
 import '../global/styles.css';
 import { useAuth } from '../context/AuthContext';
 
@@ -57,6 +58,7 @@ const Home = () => {
       </div>
 
       <UserHistory />
+      <Footer />
     </div>
   );
 };
