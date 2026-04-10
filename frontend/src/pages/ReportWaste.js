@@ -140,9 +140,26 @@ import { useNavigate } from 'react-router-dom';
 import '../global/styles.css';
 import EXIF from "exifr";
 
+
+const getAddressFromCoords = async (lat, lng) => {
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+      { headers: { 'Accept-Language': 'en' } }
+    );
+    const data = await res.json();
+    const { road, suburb, city, town, village, state, country } = data.address || {};
+    const parts = [road, suburb, city || town || village, state, country].filter(Boolean);
+    return parts.slice(0, 3).join(', ') || data.display_name || `${lat}, ${lng}`;
+  } catch {
+    return `${lat}, ${lng}`;
+  }
+};
+
 const ReportWaste = () => {
   const [image,        setImage]        = useState(null);
   const [preview,      setPreview]      = useState(null);
+  const [address , setAddress] =useState();
   const [gpsInfo,      setGpsInfo]      = useState(null);   // { latitude, longitude } from EXIF
   const [gpsError,     setGpsError]     = useState("");
   const [uploadStatus, setUploadStatus] = useState('');     // 'idle' | 'uploading' | 'analyzing' | 'success' | 'error'
@@ -193,11 +210,14 @@ const ReportWaste = () => {
     if (!image)   return alert("Please select an image.");
     if (!gpsInfo) return alert("No GPS data found. Please use a photo with location enabled.");
 
+    const address = await getAddressFromCoords(gpsInfo.latitude,gpsInfo.longitude);
+    console.log(address);
+    
     const formData = new FormData();
     formData.append('image',     image);
     formData.append('latitude',  gpsInfo.latitude);   // ✅ FIX 1
     formData.append('longitude', gpsInfo.longitude);  // ✅ FIX 1
-    formData.append('address',   "Location Auto-Detected");
+    formData.append('address',   address);
 
     try {
       setUploadStatus('uploading');

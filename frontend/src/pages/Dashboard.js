@@ -11,6 +11,8 @@ const Dashboard = () => {
       try {
         const res = await axios.get('http://localhost:5000/api/complaint/my');
         setMyComplaints(res.data.data);
+        console.log(res.data.data);
+        
       } catch (err) {
         setMyComplaints([
           { _id: '1', wasteType: 'Plastic', currentStatus: 'Pending', createdAt: '2026-03-25', location: 'Civil Lines' },
@@ -85,6 +87,7 @@ const Dashboard = () => {
               <span>Date</span>
             </div>
             {myComplaints.map(report => (
+              
               <div key={report._id} className="report-row-v2">
                 <div className="type-col">
                   <div className={`dot ${report.wasteType.toLowerCase()}`}></div>
