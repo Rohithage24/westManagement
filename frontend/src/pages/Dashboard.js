@@ -9,7 +9,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchMyData = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/complaint/my');
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND}/api/complaint/my`);
         setMyComplaints(res.data.data);
         console.log(res.data.data);
         

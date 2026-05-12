@@ -17,7 +17,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl:     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
 });
 
-const API_URL = "http://localhost:5000/api/map/all";
+const API_URL = `${process.env.REACT_APP_BACKEND}/api/map/all`;
 
 // ─── State → color config ─────────────────────────────────────────────────────
 const STATE_CONFIG = {

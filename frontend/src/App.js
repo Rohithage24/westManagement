@@ -22,19 +22,21 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [role, setRole] = useState(null); // 'user', 'admin', or null
   const [loading, setLoading] = useState(true);
+  console.log(process.env.REACT_APP_BACKEND);
+  
 
   // Check authentication status on startup
   useEffect(() => {
     const checkAuth = async () => {
       try {
         // 1. Try checking Admin profile
-        const adminRes = await axios.get('http://localhost:5000/api/admin/me');
+        const adminRes = await axios.get(`${process.env.REACT_APP_BACKEND}/api/admin/me`);
         setCurrentUser(adminRes.data.data.admin);
         setRole('admin');
       } catch (err) {
         try {
           // 2. If not admin, check if it's a regular user
-          const userRes = await axios.get('http://localhost:5000/api/user/me');
+          const userRes = await axios.get(`${process.env.REACT_APP_BACKEND}/api/user/me`);
           setCurrentUser(userRes.data.data.user);
           setRole('user');
         } catch (e) {
@@ -50,7 +52,7 @@ function App() {
 
   const handleLogout = async () => {
     const endpoint = role === 'admin' ? '/api/admin/logout' : '/api/user/logout';
-    await axios.post(`http://localhost:5000${endpoint}`);
+    await axios.post(`${process.env.REACT_APP_BACKEND}${endpoint}`);
     setCurrentUser(null);
     setRole(null);
     window.location.href = '/login';

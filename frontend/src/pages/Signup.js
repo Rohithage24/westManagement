@@ -25,7 +25,7 @@ const Signup = () => {
     const endpoint = isAdmin ? '/api/admin/register' : '/api/user/register';
 
     try {
-      const res = await axios.post(`http://localhost:5000${endpoint}`, formData);
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND}${endpoint}`, formData);
 
       if (res.data.success) {
         setStatus({ type: 'success', msg: 'Account created! Redirecting to login...' });

@@ -26,7 +26,7 @@ const ComplaintDetails = ({ item, onClose }) => {
 
   // ── Fetch status history for this complaint ──────────────────────────────
   useEffect(() => {
-    fetch(`http://localhost:5000/api/status/${item._id}`, {
+    fetch(`${process.env.REACT_APP_BACKEND}/api/status/${item._id}`, {
       method: 'GET',
       credentials: 'include'
     })
@@ -78,7 +78,7 @@ const ComplaintDetails = ({ item, onClose }) => {
 
           <div className='modal-image-box'>
             <img
-              src={`http://localhost:5000${item.imageUrl}`}
+              src={`${process.env.REACT_APP_BACKEND}${item.imageUrl}`}
               alt='Complaint'
             />
           </div>

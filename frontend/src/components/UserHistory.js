@@ -8,7 +8,7 @@ const UserHistory = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/complaint/my');
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND}/api/complaint/my`);
           // console.log(res.data);
 
         if (res.data.success && res.data.data.length > 0) {

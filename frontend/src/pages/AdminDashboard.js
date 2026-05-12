@@ -37,13 +37,13 @@ const AdminDashboard = () => {
   const fetchAdminData = async () => {
     try {
       const statsRes = await axios.get(
-        'http://localhost:5000/api/admin/complaints/stats',
+        `${process.env.REACT_APP_BACKEND}/api/admin/complaints/stats`,
         { withCredentials: true }   // ✅ FIX 2: send admin cookie
       )
       setStats(statsRes.data.data)
 
       const complaintsRes = await axios.get(
-        'http://localhost:5000/api/admin/complaints',
+        `${process.env.REACT_APP_BACKEND}/api/admin/complaints`,
         { withCredentials: true }   // ✅ FIX 2: send admin cookie
       )
       setComplaints(complaintsRes.data.data)
@@ -73,7 +73,7 @@ const AdminDashboard = () => {
   const handleStatusUpdate = async (id, newStatus) => {
     try {
       await axios.patch(
-        `http://localhost:5000/api/admin/complaints/${id}/status`,
+        `${process.env.REACT_APP_BACKEND}/api/admin/complaints/${id}/status`,
         {
           status: newStatus,
           note: `Moved to ${newStatus} by Municipality Admin`

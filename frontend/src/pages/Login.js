@@ -20,7 +20,7 @@ const Login = ({ onAuthSuccess }) => {
     const endpoint = isAdmin ? '/api/admin/login ' : '/api/user/login';
     
     try {
-      const res = await axios.post(`http://localhost:5000${endpoint}`, {
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND}${endpoint}`, {
         email: email,
         password: password
       });

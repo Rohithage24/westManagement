@@ -45,7 +45,7 @@ const ComplaintCard = ({ item }) => {
         <p style={{fontSize: '0.8rem', opacity: 0.6, margin: '5px 0'}}>👤 Demo User</p>
 
         <div className="card-img-container">
-          <img src={`http://localhost:5000${item.imageUrl}`} alt="report" />
+          <img src={`${process.env.REACT_APP_BACKEND}${item.imageUrl}`} alt="report" />
         </div>
 
         <div className="card-info" style={{marginTop: '10px'}}>
@@ -92,7 +92,7 @@ export default ComplaintCard;
 
 //         <div className="card-img-container">
 //           {/* <img src={item.imageUrl} alt="report" /> */}
-//           <img src={`http://localhost:5000${item.imageUrl}`} alt="report" />
+//           <img src={`${process.env.REACT_APP_BACKEND}${item.imageUrl}`} alt="report" />
 //         </div>
 
 //         <div className="card-info" style={{marginTop: '10px'}}>

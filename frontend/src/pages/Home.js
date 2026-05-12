@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/map/all');
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND}/api/map/all`);
         const allData = res.data.data;
         const active = allData.filter(item => item.state !== 'Complete').length;
         const cleaned = allData.filter(item => item.state === 'Complete').length;

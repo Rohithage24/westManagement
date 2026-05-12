@@ -48,7 +48,7 @@
 //       setUploadStatus('uploading');
       
 //       // Sending to backend with credentials for the JWT cookie
-//       const res = await axios.post('http://localhost:5000/api/complaint/submit', formData, {
+//       const res = await axios.post(`${process.env.REACT_APP_BACKEND}/api/complaint/submit', formData, {
 //         withCredentials: true,
 //         headers: { 'Content-Type': 'multipart/form-data' }
 //       });
@@ -224,7 +224,7 @@ const ReportWaste = () => {
       setDuplicate(null);
 
       const res = await axios.post(
-        'http://localhost:5000/api/complaint/submit',
+        `${process.env.REACT_APP_BACKEND}/api/complaint/submit`,
         formData,
         {
           withCredentials: true,

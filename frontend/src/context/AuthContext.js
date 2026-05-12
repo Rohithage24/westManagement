@@ -4,7 +4,7 @@ import axios from 'axios';
 // Send cookies with every request
 axios.defaults.withCredentials = true;
 
-const BASE = 'http://localhost:5000';
+const BASE = `${process.env.REACT_APP_BACKEND}`;
 
 const AuthContext = createContext();
 
