@@ -27,13 +27,15 @@ console.log("CORE", process.env.CORS_ORIGIN);
 // ── CORS ──────────────────────────────────────────────────────────────────────
 app.use(
   cors({
-    origin: ["http://localhost:3000","https://westfrontend.onrender.com/signup",*],
+    origin: [
+      "http://localhost:3000",
+      "https://westfrontend.onrender.com"
+    ],
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 
