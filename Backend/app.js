@@ -27,10 +27,7 @@ console.log("CORE", process.env.CORS_ORIGIN);
 // ── CORS ──────────────────────────────────────────────────────────────────────
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://westfrontend.onrender.com"
-    ],
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
