@@ -21,13 +21,15 @@ import adminRouter       from "./routes/admin.routes.js";
 dotenv.config();
 
 const app = express();
-console.log("CORE", process.env.CORS_ORIGIN);
 
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: [
+      "http://localhost:3000",
+      "https://westfrontend.onrender.com"
+    ],
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
