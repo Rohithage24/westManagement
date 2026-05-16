@@ -64,12 +64,13 @@ const Navbar = ({ user, role, onLogout }) => {
         <span className="nav-text">Contact</span>
       </Link>
 
-      <Link to="/signup" className={`nav-item ${location.pathname === '/signup' ? 'active' : ''}`}>
+      
+      {user ?"":(<Link to="/signup" className={`nav-item ${location.pathname === '/signup' ? 'active' : ''}`}>
         <span className="nav-icon">
           <i className="bi bi-arrow-down-right-square-fill" style={iconStyle}></i>
         </span>
         <span className="nav-text">Signup</span>
-      </Link>
+      </Link>)}
 
       <div style={{ marginTop: 'auto', marginBottom: '30px' }}>
         {user ? (

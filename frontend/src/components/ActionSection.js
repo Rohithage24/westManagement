@@ -5,7 +5,7 @@ const ActionSection = ({ onReportClick }) => {
     <div className="action-section">
       {/* Left Side: Guidelines */}
       <div className="guidelines-left">
-        <h3>How to Report Waste</h3>
+        <h3 >How to Report Waste</h3>
         <ul className="guideline-list">
           <li><span>1</span> Take a clear photo of the waste area.</li>
           <li><span>2</span> Ensure your GPS/Location is turned on.</li>
